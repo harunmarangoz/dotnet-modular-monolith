@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Modules\LinkModule\LinkModule.Api\LinkModule.Api.csproj"/>
+        <ProjectReference Include="..\Modules\LinkModule\LinkModule.Persistence\LinkModule.Persistence.csproj"/>
+        <ProjectReference Include="..\Shared\Shared.Api\Shared.Api.csproj"/>
+        <ProjectReference Include="..\Shared\Shared.Application\Shared.Application.csproj"/>
+        <ProjectReference Include="..\Shared\Shared.Domain\Shared.Domain.csproj"/>
+        <ProjectReference Include="..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Shared\Shared.Persistence\Shared.Persistence.csproj"/>
+    </ItemGroup>
+</Project>

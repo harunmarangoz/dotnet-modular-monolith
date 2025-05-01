@@ -1,0 +1,37 @@
+name: services
+services:
+  postgres:
+      container_name: postgres
+      image: "postgres:latest"
+      ports:
+        - "5432:5432"
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=p@ssw0rd
+        - PGDATA= /data/postgres
+      volumes:
+        - "postgres_data:/data/postgres"
+  ## Seq Pass: p@ssw0rd  ##
+  seq:
+    container_name: seq
+    image: datalust/seq:latest
+    restart: unless-stopped
+    ports:
+      - "5341:5341"
+      - "5342:80"
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_ADMINUSERNAME=admin
+      - SEQ_FIRSTRUN_ADMINPASSWORDHASH=QJZ8NlVSUJUv0eCYV+cVg95yJprqfmDtpSboa3a5IwiPMj7tUhPRJxAx7kW0Yao25Jh2W4sXRt27XWCU9Jzql6CVF8PJqxctCXHiBf0Ftgy+
+    volumes:
+      - "seq_data:/data"
+
+
+volumes:
+  postgres_data:
+  seq_data:
+    driver: local
+
+networks:
+  common_network:
+    driver: bridge
