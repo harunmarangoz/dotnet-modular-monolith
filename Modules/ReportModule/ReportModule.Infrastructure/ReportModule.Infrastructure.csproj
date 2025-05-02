@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <PackageReference Include="MediatR"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" />
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Shared\Shared.Application\Shared.Application.csproj" />
+        <ProjectReference Include="..\ReportModule.Application\ReportModule.Application.csproj" />
+        <ProjectReference Include="..\ReportModule.Contracts\ReportModule.Contracts.csproj" />
+        <ProjectReference Include="..\ReportModule.Domain\ReportModule.Domain.csproj" />
+        <ProjectReference Include="..\ReportModule.Persistence\ReportModule.Persistence.csproj" />
+    </ItemGroup>
+</Project>

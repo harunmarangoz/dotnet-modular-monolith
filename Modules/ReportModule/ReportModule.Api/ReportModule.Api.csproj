@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <PackageReference Include="MediatR" />
+        <PackageReference Include="Microsoft.AspNetCore" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Shared\Shared.Api\Shared.Api.csproj" />
+        <ProjectReference Include="..\..\..\Shared\Shared.Persistence\Shared.Persistence.csproj" />
+        <ProjectReference Include="..\ReportModule.Application\ReportModule.Application.csproj" />
+        <ProjectReference Include="..\ReportModule.Infrastructure\ReportModule.Infrastructure.csproj" />
+        <ProjectReference Include="..\ReportModule.Persistence\ReportModule.Persistence.csproj" />
+    </ItemGroup>
+</Project>
