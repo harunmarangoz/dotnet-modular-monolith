@@ -1,16 +1,16 @@
 name: services
 services:
   postgres:
-      container_name: postgres
-      image: "postgres:latest"
-      ports:
-        - "5432:5432"
-      environment:
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=p@ssw0rd
-        - PGDATA= /data/postgres
-      volumes:
-        - "postgres_data:/data/postgres"
+    container_name: postgres
+    image: "postgres:latest"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=p@ssw0rd
+      - PGDATA= /data/postgres
+    volumes:
+      - "postgres_data:/data/postgres"
   ## Seq Pass: p@ssw0rd  ##
   seq:
     container_name: seq
@@ -24,12 +24,28 @@ services:
       - SEQ_FIRSTRUN_ADMINUSERNAME=admin
       - SEQ_FIRSTRUN_ADMINPASSWORDHASH=QJZ8NlVSUJUv0eCYV+cVg95yJprqfmDtpSboa3a5IwiPMj7tUhPRJxAx7kW0Yao25Jh2W4sXRt27XWCU9Jzql6CVF8PJqxctCXHiBf0Ftgy+
     volumes:
-      - "seq_data:/data"
-
+      - "seq_data:/data/seq"
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    restart: unless-stopped
+    ports:
+      - "4369:4369"
+      - "5551:5551"
+      - "5552:5552"
+      - "5672:5672"
+      - "25672:25672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=p@ssw0rd
+    volumes:
+      - "rabbitmq_data:/data/rabbitmq"
 
 volumes:
   postgres_data:
   seq_data:
+  rabbitmq_data:
     driver: local
 
 networks:
