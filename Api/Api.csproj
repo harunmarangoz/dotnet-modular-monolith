@@ -17,6 +17,8 @@
         <ProjectReference Include="..\Modules\LinkModule\LinkModule.Persistence\LinkModule.Persistence.csproj"/>
         <ProjectReference Include="..\Modules\AnalyticModule\AnalyticModule.Api\AnalyticModule.Api.csproj"/>
         <ProjectReference Include="..\Modules\AnalyticModule\AnalyticModule.Persistence\AnalyticModule.Persistence.csproj"/>
+        <ProjectReference Include="..\Modules\QrModule\QrModule.Api\QrModule.Api.csproj" />
+        <ProjectReference Include="..\Modules\QrModule\QrModule.Infrastructure\QrModule.Infrastructure.csproj" />
         <ProjectReference Include="..\Shared\Shared.Api\Shared.Api.csproj"/>
         <ProjectReference Include="..\Shared\Shared.Application\Shared.Application.csproj"/>
         <ProjectReference Include="..\Shared\Shared.Domain\Shared.Domain.csproj"/>

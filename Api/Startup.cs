@@ -5,8 +5,11 @@ using AnalyticModule.Infrastructure;
 using AnalyticModule.Persistence.Contexts;
 using Api.Handlers;
 using LinkModule.Infrastructure;
+using LinkModule.Infrastructure.Services;
 using LinkModule.Persistence.Contexts;
 using MassTransit;
+using QrModule.Infrastructure;
+using Shared.Application.Services;
 using Shared.Domain.Settings;
 using Shared.Persistence;
 
@@ -29,6 +32,8 @@ public class Startup
         services.AddLinkModuleInfrastructure();
         apiAssemblies.Add(typeof(LinkModule.Api.Controllers.LinkController).Assembly);
 
+        services.AddScoped<ILinkModuleService, LinkModuleService>();
+
         #endregion
 
         #region Analytic Module
@@ -40,6 +45,14 @@ public class Startup
         services.RegisterDbContext<AnalyticModuleDatabaseContext>(analyticModuleDbConnectionSettings);
 
         services.AddAnalyticModuleInfrastructure();
+
+        #endregion
+
+        #region Qr Module
+
+        apiAssemblies.Add(typeof(QrModule.Api.Controllers.QrController).Assembly);
+        
+        services.AddQrModuleInfrastructure();
 
         #endregion
 
