@@ -8,6 +8,7 @@ using LinkModule.Infrastructure;
 using LinkModule.Infrastructure.Services;
 using LinkModule.Persistence.Contexts;
 using MassTransit;
+using Microsoft.OpenApi.Models;
 using QrModule.Infrastructure;
 using Shared.Application.Services;
 using Shared.Domain.Settings;
@@ -51,7 +52,7 @@ public class Startup
         #region Qr Module
 
         apiAssemblies.Add(typeof(QrModule.Api.Controllers.QrController).Assembly);
-        
+
         services.AddQrModuleInfrastructure();
 
         #endregion
@@ -68,6 +69,16 @@ public class Startup
         {
             builder.AddApplicationPart(assembly);
         }
+
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen(opt =>
+        {
+            opt.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "Modular Monolith",
+                Version = "v1"
+            });
+        });
 
         var rabbitMqSettings = configuration
             .GetSection(nameof(RabbitMqSettings))
@@ -99,6 +110,12 @@ public class Startup
     {
         app.UseHttpsRedirection();
         app.UseStaticFiles();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
 
         app.UseRouting();
 
