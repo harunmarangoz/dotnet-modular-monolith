@@ -50,20 +50,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnalyticModule.Persistence"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Contracts", "Shared\Shared.Contracts\Shared.Contracts.csproj", "{01FFD70A-4562-4B12-AAFB-9E2C7FD11076}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReportModule", "ReportModule", "{0EA692D8-051E-4984-9A37-F2B2B0C545A7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportModule.Api", "Modules\ReportModule\ReportModule.Api\ReportModule.Api.csproj", "{518C6111-FEC3-4501-9F17-D172085A2F1C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportModule.Application", "Modules\ReportModule\ReportModule.Application\ReportModule.Application.csproj", "{8E4B1AF0-2684-4437-994F-11EF469AA04B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportModule.Contracts", "Modules\ReportModule\ReportModule.Contracts\ReportModule.Contracts.csproj", "{54B9CE06-E2A2-4432-8262-20FF9BEA9CBA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportModule.Domain", "Modules\ReportModule\ReportModule.Domain\ReportModule.Domain.csproj", "{184BFAC0-33EF-4A11-9224-80176BD25555}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportModule.Infrastructure", "Modules\ReportModule\ReportModule.Infrastructure\ReportModule.Infrastructure.csproj", "{8947D4EB-8A79-4262-A56F-5BCCCA14C93A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportModule.Persistence", "Modules\ReportModule\ReportModule.Persistence\ReportModule.Persistence.csproj", "{F2BC8CED-0EDD-4A8A-B8C7-52F5D5A9D594}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "QrModule", "QrModule", "{6EC379DE-9192-4127-81AA-831468E1CF49}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QrModule.Api", "Modules\QrModule\QrModule.Api\QrModule.Api.csproj", "{8D9D7990-CBC7-4D39-868C-B98EB5034365}"
