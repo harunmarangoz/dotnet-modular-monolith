@@ -2,5 +2,5 @@
 
 public class LinkConstants
 {
-    public const string LinkRedirectCacheKey = "LinkRedirect:{0}";
+    public const string LinkUniqueKeyCacheKey = "LinkUnqiueKey:{0}";
 }

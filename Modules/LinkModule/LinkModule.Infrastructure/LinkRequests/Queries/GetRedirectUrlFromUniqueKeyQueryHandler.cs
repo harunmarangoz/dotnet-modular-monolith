@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared.Domain.Exceptions;
 
-namespace LinkModule.Infrastructure.UrlRequests.Queries;
+namespace LinkModule.Infrastructure.LinkRequests.Queries;
 
 public class GetRedirectUrlFromUniqueKeyQueryHandler(IDbContextFactory<LinkModuleDatabaseContext> contextFactory)
     : IRequestHandler<GetRedirectUrlFromUniqueKeyQuery, string>

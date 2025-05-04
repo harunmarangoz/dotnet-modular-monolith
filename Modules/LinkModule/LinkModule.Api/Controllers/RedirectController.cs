@@ -1,19 +1,28 @@
 using LinkModule.Application.LinkRequests.Queries;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Contracts.Messages;
 
 namespace LinkModule.Api.Controllers;
 
-public class RedirectController(ISender sender) : Controller
+public class RedirectController(ISender sender, IBus bus) : Controller
 {
     public async Task<ActionResult> Index()
     {
         var uniqueKey = HttpContext.Request.Path.Value.TrimStart('/');
         if (string.IsNullOrEmpty(uniqueKey)) return NotFound();
 
-        var redirect = await sender.Send(new GetRedirectUrlFromUniqueKeyQuery(uniqueKey));
-        if (string.IsNullOrEmpty(redirect)) return NotFound();
+        var linkResult = await sender.Send(new GetLinkByUniqueKeyQuery(uniqueKey));
 
-        return RedirectPermanent(redirect);
+        await bus.Publish(new CreateClickEventMessage
+        {
+            LinkId = linkResult.Id,
+            LinkUniqueKey = linkResult.UniqueKey,
+            UserAgent = HttpContext.Request.Headers["User-Agent"].ToString(),
+            IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
+        });
+
+        return RedirectPermanent(linkResult.Url);
     }
 }

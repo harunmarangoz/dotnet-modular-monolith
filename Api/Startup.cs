@@ -104,6 +104,15 @@ public class Startup
 
         services.AddExceptionHandler<ExceptionHandler>();
         services.AddProblemDetails();
+
+        var redisSettings = configuration
+            .GetSection($"{nameof(RedisSettings)}")
+            .Get<RedisSettings>();
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = redisSettings.Configuration;
+            options.InstanceName = redisSettings.InstanceName;
+        });
     }
 
     public void Configure(WebApplication app, IWebHostEnvironment env)

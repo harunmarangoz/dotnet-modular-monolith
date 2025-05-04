@@ -1,6 +1,6 @@
 ﻿namespace Shared.Contracts.Messages;
 
-public interface CreateClickEventMessage
+public class CreateClickEventMessage
 {
     public Guid LinkId { get; set; }
     public string LinkUniqueKey { get; set; }

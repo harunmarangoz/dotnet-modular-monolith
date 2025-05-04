@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="MassTransit" />
     <PackageReference Include="MediatR" />
     <PackageReference Include="Microsoft.AspNetCore" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
@@ -10,6 +11,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Shared.Api\Shared.Api.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Shared.Contracts\Shared.Contracts.csproj" />
     <ProjectReference Include="..\..\..\Shared\Shared.Persistence\Shared.Persistence.csproj" />
     <ProjectReference Include="..\LinkModule.Application\LinkModule.Application.csproj" />
     <ProjectReference Include="..\LinkModule.Infrastructure\LinkModule.Infrastructure.csproj" />

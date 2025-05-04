@@ -4,7 +4,7 @@ using LinkModule.Persistence.Contexts;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace LinkModule.Infrastructure.UrlRequests.Commands;
+namespace LinkModule.Infrastructure.LinkRequests.Commands;
 
 public class CreateLinkCommandHandler(IDbContextFactory<LinkModuleDatabaseContext> contextFactory)
     : IRequestHandler<CreateLinkCommand, CreateLinkCommandResult>
