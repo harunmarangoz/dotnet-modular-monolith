@@ -5,12 +5,12 @@ using Shared.Application.Services;
 
 namespace QrModule.Infrastructure.QrRequests.Queries;
 
-public class GetQrByLinkIdQueryHandler(ILinkModuleService linkModuleService)
-    : IRequestHandler<GetQrByLinkIdQuery, GetQrByLinkIdQueryResult>
+public class GetQrByLinkUniqueKeyQueryHandler(ILinkModuleService linkModuleService)
+    : IRequestHandler<GetQrByLinkUniqueKeyQuery, GetQrByLinkUniqueKeyQueryResult>
 {
-    public async Task<GetQrByLinkIdQueryResult> Handle(GetQrByLinkIdQuery request, CancellationToken cancellationToken)
+    public async Task<GetQrByLinkUniqueKeyQueryResult> Handle(GetQrByLinkUniqueKeyQuery request, CancellationToken cancellationToken)
     {
-        var redirectUrl = await linkModuleService.GetRedirectUrlFromUniqueKeyAsync(request.LinkId.ToString());
+        var redirectUrl = await linkModuleService.GetRedirectUrlFromUniqueKeyAsync(request.UniqueKey);
 
         var generator = new QRCodeGenerator();
         var data = generator.CreateQrCode(redirectUrl, QRCodeGenerator.ECCLevel.Q);
@@ -21,7 +21,7 @@ public class GetQrByLinkIdQueryHandler(ILinkModuleService linkModuleService)
         var base64String = Convert.ToBase64String(qrBytes);
         var base64Image = $"data:image/png;base64,{base64String}";
 
-        return new GetQrByLinkIdQueryResult
+        return new GetQrByLinkUniqueKeyQueryResult
         {
             Base64Image = base64Image
         };

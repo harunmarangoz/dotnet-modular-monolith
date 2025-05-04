@@ -7,10 +7,10 @@ namespace QrModule.Api.Controllers;
 [Route("api/[controller]")]
 public class QrController(ISender sender) : Controller
 {
-    [HttpGet("get-qr-by-link-id/{linkId}")]
-    public async Task<IActionResult> GetQrByLinkId(Guid linkId)
+    [HttpGet("{uniqueKey}")]
+    public async Task<IActionResult> GetQrByLinkUniqueKey(string uniqueKey)
     {
-        var result = await sender.Send(new GetQrByLinkIdQuery(linkId));
+        var result = await sender.Send(new GetQrByLinkUniqueKeyQuery(uniqueKey));
         return Ok(result);
     }
 }
