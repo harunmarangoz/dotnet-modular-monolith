@@ -38,22 +38,6 @@ services:
       retries: 3
     networks:
       - infrastructures
-  ## Seq Pass: p@ssw0rd  ##
-  seq:
-    container_name: seq
-    image: datalust/seq:latest
-    restart: unless-stopped
-    ports:
-      - "5341:5341"
-      - "5342:80"
-    environment:
-      - ACCEPT_EULA=Y
-      - SEQ_FIRSTRUN_ADMINUSERNAME=admin
-      - SEQ_FIRSTRUN_ADMINPASSWORDHASH=QJZ8NlVSUJUv0eCYV+cVg95yJprqfmDtpSboa3a5IwiPMj7tUhPRJxAx7kW0Yao25Jh2W4sXRt27XWCU9Jzql6CVF8PJqxctCXHiBf0Ftgy+
-    volumes:
-      - "seq_data:/data/seq"
-    networks:
-      - infrastructures
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:3-management
@@ -96,7 +80,6 @@ services:
 
 volumes:
   postgres_data:
-  seq_data:
   rabbitmq_data:
   redis_data:
     driver: local
