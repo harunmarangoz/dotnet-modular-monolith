@@ -1,5 +1,25 @@
 name: services
 services:
+  modular-monolith.api:
+    image: modular-monolith.api:latest
+    container_name: modular-monolith.api-container
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=80
+    ports:
+      - "5000:80"
+    networks:
+      - infrastructures
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
   postgres:
     container_name: postgres
     image: "postgres:latest"
@@ -11,6 +31,13 @@ services:
       - PGDATA= /data/postgres
     volumes:
       - "postgres_data:/data/postgres"
+    healthcheck:
+      test: pg_isready -U postgres -d postgres
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    networks:
+      - infrastructures
   ## Seq Pass: p@ssw0rd  ##
   seq:
     container_name: seq
@@ -25,6 +52,8 @@ services:
       - SEQ_FIRSTRUN_ADMINPASSWORDHASH=QJZ8NlVSUJUv0eCYV+cVg95yJprqfmDtpSboa3a5IwiPMj7tUhPRJxAx7kW0Yao25Jh2W4sXRt27XWCU9Jzql6CVF8PJqxctCXHiBf0Ftgy+
     volumes:
       - "seq_data:/data/seq"
+    networks:
+      - infrastructures
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:3-management
@@ -41,6 +70,13 @@ services:
       - RABBITMQ_DEFAULT_PASS=p@ssw0rd
     volumes:
       - "rabbitmq_data:/data/rabbitmq"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    networks:
+      - infrastructures
   redis:
     container_name: redis
     image: redis:latest
@@ -50,6 +86,13 @@ services:
     command: redis-server --save 20 1 --loglevel warning --requirepass p@ssw0rd
     volumes:
       - "redis_data:/data/redis"
+    networks:
+      - infrastructures
+    healthcheck:
+      test: redis-cli ping
+      interval: 10s
+      timeout: 3s
+      retries: 3
 
 volumes:
   postgres_data:
@@ -59,5 +102,4 @@ volumes:
     driver: local
 
 networks:
-  common_network:
-    driver: bridge
+  infrastructures:
