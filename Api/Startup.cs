@@ -10,6 +10,7 @@ using LinkModule.Persistence.Contexts;
 using MassTransit;
 using Microsoft.OpenApi.Models;
 using QrModule.Infrastructure;
+using QrModule.Infrastructure.Services;
 using Shared.Application.Services;
 using Shared.Domain.Settings;
 using Shared.Persistence;
@@ -45,7 +46,11 @@ public class Startup
         services.AddKeyedSingleton(nameof(AnalyticModuleDatabaseContext), analyticModuleDbConnectionSettings);
         services.RegisterDbContext<AnalyticModuleDatabaseContext>(analyticModuleDbConnectionSettings);
 
+        apiAssemblies.Add(typeof(AnalyticModule.Api.Controllers.AnalyticController).Assembly);
+
         services.AddAnalyticModuleInfrastructure();
+
+        services.AddScoped<IQrModuleService, QrModuleService>();
 
         #endregion
 
