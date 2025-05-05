@@ -1,4 +1,4 @@
-using LinkModule.Application.LinkRequests.DataTransferObjects;
+using Shared.Application.DataTransferObjects;
 using MediatR;
 using Shared.Application.Results;
 

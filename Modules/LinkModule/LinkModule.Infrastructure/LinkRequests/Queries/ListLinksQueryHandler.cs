@@ -1,4 +1,4 @@
-using LinkModule.Application.LinkRequests.DataTransferObjects;
+using Shared.Application.DataTransferObjects;
 using LinkModule.Application.LinkRequests.Queries;
 using LinkModule.Persistence.Contexts;
 using Mapster;
