@@ -8,18 +8,20 @@ namespace LinkModule.Infrastructure.Services;
 
 public class LinkModuleService(ISender sender) : ILinkModuleService
 {
-    public async Task<DataResult<string>> GetRedirectUrlFromUniqueKeyAsync(string uniqueKey)
+    public async Task<DataResult<string>> GetRedirectUrlFromUniqueKeyAsync(string uniqueKey,
+        CancellationToken cancellationToken = default)
     {
-        return await sender.Send(new GetRedirectUrlFromUniqueKeyQuery(uniqueKey));
+        return await sender.Send(new GetRedirectUrlFromUniqueKeyQuery(uniqueKey), cancellationToken);
     }
 
-    public Task<DataResult<LinkDto>> GetLinkByIdAsync(Guid id)
+    public Task<DataResult<LinkDto>> GetLinkByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return sender.Send(new GetLinkByIdQuery(id));
+        return sender.Send(new GetLinkByIdQuery(id), cancellationToken);
     }
 
-    public Task<DataResult<LinkDto>> GetLinkByUniqueKeyAsync(string uniqueKey)
+    public Task<DataResult<LinkDto>> GetLinkByUniqueKeyAsync(string uniqueKey,
+        CancellationToken cancellationToken = default)
     {
-        return sender.Send(new GetLinkByUniqueKeyQuery(uniqueKey));
+        return sender.Send(new GetLinkByUniqueKeyQuery(uniqueKey), cancellationToken);
     }
 }

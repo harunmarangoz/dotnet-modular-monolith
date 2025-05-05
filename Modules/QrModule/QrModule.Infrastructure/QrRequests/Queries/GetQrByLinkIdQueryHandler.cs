@@ -13,7 +13,7 @@ public class GetQrByLinkIdQueryHandler(ILinkModuleService linkModuleService)
     public async Task<DataResult<GetQrByLinkIdQueryResult>> Handle(GetQrByLinkIdQuery request,
         CancellationToken cancellationToken)
     {
-        var linkResult = await linkModuleService.GetLinkByIdAsync(request.LinkId);
+        var linkResult = await linkModuleService.GetLinkByIdAsync(request.LinkId, cancellationToken);
         if (linkResult.HasError) return DataResult<GetQrByLinkIdQueryResult>.Failure(linkResult.Message);
 
         var generator = new QRCodeGenerator();

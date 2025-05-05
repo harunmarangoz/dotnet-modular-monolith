@@ -4,5 +4,5 @@ namespace Shared.Application.Services;
 
 public interface IQrModuleService
 {
-    Task<DataResult<string>> GetQrImageAsync(Guid id);
+    Task<DataResult<string>> GetQrImageAsync(Guid id, CancellationToken cancellationToken = default);
 }
