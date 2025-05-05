@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using QRCoder;
 using QrModule.Application.QrQueries.Queries;
 using Shared.Application.Results;
@@ -7,14 +7,14 @@ using Shared.Domain.Exceptions;
 
 namespace QrModule.Infrastructure.QrRequests.Queries;
 
-public class GetQrByLinkUniqueKeyQueryHandler(ILinkModuleService linkModuleService)
-    : IRequestHandler<GetQrByLinkUniqueKeyQuery, DataResult<GetQrByLinkUniqueKeyQueryResult>>
+public class GetQrByLinkIdQueryHandler(ILinkModuleService linkModuleService)
+    : IRequestHandler<GetQrByLinkIdQuery, DataResult<GetQrByLinkIdQueryResult>>
 {
-    public async Task<DataResult<GetQrByLinkUniqueKeyQueryResult>> Handle(GetQrByLinkUniqueKeyQuery request,
+    public async Task<DataResult<GetQrByLinkIdQueryResult>> Handle(GetQrByLinkIdQuery request,
         CancellationToken cancellationToken)
     {
-        var linkResult = await linkModuleService.GetLinkByUniqueKeyAsync(request.UniqueKey);
-        if (linkResult.HasError) return DataResult<GetQrByLinkUniqueKeyQueryResult>.Failure(linkResult.Message);
+        var linkResult = await linkModuleService.GetLinkByIdAsync(request.LinkId);
+        if (linkResult.HasError) return DataResult<GetQrByLinkIdQueryResult>.Failure(linkResult.Message);
 
         var generator = new QRCodeGenerator();
         var data = generator.CreateQrCode(linkResult.Data.Url, QRCodeGenerator.ECCLevel.Q);
@@ -25,7 +25,7 @@ public class GetQrByLinkUniqueKeyQueryHandler(ILinkModuleService linkModuleServi
         var base64String = Convert.ToBase64String(qrBytes);
         var base64Image = $"data:image/png;base64,{base64String}";
 
-        return DataResult<GetQrByLinkUniqueKeyQueryResult>.Success(new GetQrByLinkUniqueKeyQueryResult
+        return DataResult<GetQrByLinkIdQueryResult>.Success(new GetQrByLinkIdQueryResult
         {
             Base64Image = base64Image
         });

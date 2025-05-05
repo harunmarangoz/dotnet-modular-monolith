@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using Shared.Application.Results;
 
 namespace QrModule.Application.QrQueries.Queries;
 
-public record GetQrByLinkUniqueKeyQuery(string UniqueKey) : IRequest<GetQrByLinkUniqueKeyQueryResult>;
+public record GetQrByLinkUniqueKeyQuery(string UniqueKey) : IRequest<DataResult<GetQrByLinkUniqueKeyQueryResult>>;
 
 public class GetQrByLinkUniqueKeyQueryResult
 {

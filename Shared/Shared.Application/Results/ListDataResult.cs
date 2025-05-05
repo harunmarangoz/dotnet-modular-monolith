@@ -13,7 +13,7 @@ public class ListDataResult<T> : Result
         };
     }
 
-    public static ListDataResult<T> Failure(string message = null, List<KeyValuePair<string, string>> errors = null)
+    public new static ListDataResult<T> Failure(string message = null, List<KeyValuePair<string, string>> errors = null)
     {
         return new ListDataResult<T>
         {
