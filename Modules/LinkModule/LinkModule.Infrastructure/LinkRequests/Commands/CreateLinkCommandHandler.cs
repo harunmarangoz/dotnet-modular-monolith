@@ -3,13 +3,14 @@ using LinkModule.Domain.Entities;
 using LinkModule.Persistence.Contexts;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Shared.Application.Results;
 
 namespace LinkModule.Infrastructure.LinkRequests.Commands;
 
 public class CreateLinkCommandHandler(IDbContextFactory<LinkModuleDatabaseContext> contextFactory)
-    : IRequestHandler<CreateLinkCommand, CreateLinkCommandResult>
+    : IRequestHandler<CreateLinkCommand, DataResult<Guid>>
 {
-    public async Task<CreateLinkCommandResult> Handle(CreateLinkCommand request, CancellationToken cancellationToken)
+    public async Task<DataResult<Guid>> Handle(CreateLinkCommand request, CancellationToken cancellationToken)
     {
         var context = await contextFactory.CreateDbContextAsync(cancellationToken);
 
@@ -26,10 +27,7 @@ public class CreateLinkCommandHandler(IDbContextFactory<LinkModuleDatabaseContex
         await context.Links.AddAsync(link, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
 
-        return new CreateLinkCommandResult()
-        {
-            LinkId = link.Id
-        };
+        return DataResult<Guid>.Success(link.Id);
     }
 
     private async Task<string> GetUniqueKeyAsync(LinkModuleDatabaseContext context, CancellationToken cancellationToken)

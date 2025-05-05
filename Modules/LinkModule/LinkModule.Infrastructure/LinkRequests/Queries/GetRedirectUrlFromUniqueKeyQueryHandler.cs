@@ -2,14 +2,14 @@ using LinkModule.Application.LinkRequests.Queries;
 using LinkModule.Persistence.Contexts;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Shared.Domain.Exceptions;
+using Shared.Application.Results;
 
 namespace LinkModule.Infrastructure.LinkRequests.Queries;
 
 public class GetRedirectUrlFromUniqueKeyQueryHandler(IDbContextFactory<LinkModuleDatabaseContext> contextFactory)
-    : IRequestHandler<GetRedirectUrlFromUniqueKeyQuery, string>
+    : IRequestHandler<GetRedirectUrlFromUniqueKeyQuery, DataResult<string>>
 {
-    public async Task<string> Handle(GetRedirectUrlFromUniqueKeyQuery request,
+    public async Task<DataResult<string>> Handle(GetRedirectUrlFromUniqueKeyQuery request,
         CancellationToken cancellationToken)
     {
         var context = await contextFactory.CreateDbContextAsync(cancellationToken);
@@ -17,8 +17,8 @@ public class GetRedirectUrlFromUniqueKeyQueryHandler(IDbContextFactory<LinkModul
         var entity = await context.Links
             .FirstOrDefaultAsync(x => x.UniqueKey == request.UniqueKey, cancellationToken);
 
-        if (entity == null) throw new AppNotFoundException("Link not found");
+        if (entity == null) return DataResult<string>.Failure("No link found for unique key");
 
-        return entity.Url;
+        return DataResult<string>.Success(entity.Url);
     }
 }

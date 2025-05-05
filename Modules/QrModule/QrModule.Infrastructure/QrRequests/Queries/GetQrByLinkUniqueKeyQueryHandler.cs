@@ -2,18 +2,21 @@
 using QRCoder;
 using QrModule.Application.QrQueries.Queries;
 using Shared.Application.Services;
+using Shared.Domain.Exceptions;
 
 namespace QrModule.Infrastructure.QrRequests.Queries;
 
 public class GetQrByLinkUniqueKeyQueryHandler(ILinkModuleService linkModuleService)
     : IRequestHandler<GetQrByLinkUniqueKeyQuery, GetQrByLinkUniqueKeyQueryResult>
 {
-    public async Task<GetQrByLinkUniqueKeyQueryResult> Handle(GetQrByLinkUniqueKeyQuery request, CancellationToken cancellationToken)
+    public async Task<GetQrByLinkUniqueKeyQueryResult> Handle(GetQrByLinkUniqueKeyQuery request,
+        CancellationToken cancellationToken)
     {
         var redirectUrl = await linkModuleService.GetRedirectUrlFromUniqueKeyAsync(request.UniqueKey);
+        if (redirectUrl.HasError) throw new AppException(redirectUrl.Message);
 
         var generator = new QRCodeGenerator();
-        var data = generator.CreateQrCode(redirectUrl, QRCodeGenerator.ECCLevel.Q);
+        var data = generator.CreateQrCode(redirectUrl.Data, QRCodeGenerator.ECCLevel.Q);
 
         var qrCode = new PngByteQRCode(data);
         var qrBytes = qrCode.GetGraphic(20);

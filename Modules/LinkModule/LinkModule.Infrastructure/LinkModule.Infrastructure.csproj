@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
+        <PackageReference Include="Mapster" />
         <PackageReference Include="MediatR"/>
         <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" />
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />

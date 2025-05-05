@@ -1,27 +1,23 @@
+using LinkModule.Application.LinkRequests.DataTransferObjects;
 using LinkModule.Application.LinkRequests.Queries;
 using LinkModule.Persistence.Contexts;
+using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Shared.Domain.Exceptions;
+using Shared.Application.Results;
 
 namespace LinkModule.Infrastructure.LinkRequests.Queries;
 
 public class GetLinkByIdQueryHandler(IDbContextFactory<LinkModuleDatabaseContext> contextFactory)
-    : IRequestHandler<GetLinkByIdQuery, GetLinkByIdQueryResult>
+    : IRequestHandler<GetLinkByIdQuery, DataResult<LinkDto>>
 {
-    public async Task<GetLinkByIdQueryResult> Handle(GetLinkByIdQuery request, CancellationToken cancellationToken)
+    public async Task<DataResult<LinkDto>> Handle(GetLinkByIdQuery request, CancellationToken cancellationToken)
     {
         var context = await contextFactory.CreateDbContextAsync(cancellationToken);
 
         var link = await context.Links.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
-        if (link == null) throw new AppNotFoundException("Link not found");
+        if (link == null) return DataResult<LinkDto>.Failure("Link not found");
 
-        return new GetLinkByIdQueryResult()
-        {
-            Id = link.Id,
-            Name = link.Name,
-            Url = link.Url,
-            UniqueKey = link.UniqueKey
-        };
+        return DataResult<LinkDto>.Success(link.Adapt<LinkDto>());
     }
 }

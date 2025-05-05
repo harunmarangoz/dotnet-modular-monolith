@@ -17,12 +17,12 @@ public class RedirectController(ISender sender, IBus bus) : Controller
 
         await bus.Publish(new CreateClickEventMessage
         {
-            LinkId = linkResult.Id,
-            LinkUniqueKey = linkResult.UniqueKey,
+            LinkId = linkResult.Data.Id,
+            LinkUniqueKey = linkResult.Data.UniqueKey,
             UserAgent = HttpContext.Request.Headers["User-Agent"].ToString(),
             IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
         });
 
-        return RedirectPermanent(linkResult.Url);
+        return RedirectPermanent(linkResult.Data.Url);
     }
 }

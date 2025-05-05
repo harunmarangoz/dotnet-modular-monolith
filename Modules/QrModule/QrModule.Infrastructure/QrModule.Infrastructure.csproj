@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
+        <PackageReference Include="Mapster" />
         <PackageReference Include="MediatR"/>
         <PackageReference Include="Microsoft.Extensions.Caching.Abstractions"/>
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis"/>
@@ -9,6 +10,7 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\..\Shared\Shared.Application\Shared.Application.csproj"/>
+        <ProjectReference Include="..\..\..\Shared\Shared.Domain\Shared.Domain.csproj" />
         <ProjectReference Include="..\QrModule.Application\QrModule.Application.csproj"/>
     </ItemGroup>
 </Project>
