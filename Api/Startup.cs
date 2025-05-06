@@ -2,16 +2,13 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using AnalyticModule.Api;
 using AnalyticModule.Api.Consumers;
-using AnalyticModule.Persistence.Contexts;
 using Api.Handlers;
 using LinkModule.Api;
-using LinkModule.Persistence.Contexts;
 using MassTransit;
 using Microsoft.OpenApi.Models;
 using QrModule.Api;
 using Shared.Api;
 using Shared.Domain.Settings;
-using Shared.Persistence.Extensions;
 
 namespace Api;
 
@@ -26,13 +23,6 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        var apiAssemblies = new List<Assembly>()
-        {
-            typeof(AnalyticModule.Api.Controllers.AnalyticController).Assembly,
-            typeof(LinkModule.Api.Controllers.LinkController).Assembly,
-            typeof(QrModule.Api.Controllers.QrController).Assembly
-        };
-
         foreach (var moduleStartup in _moduleStartups)
         {
             moduleStartup.ConfigureServices(services, configuration);
@@ -45,6 +35,12 @@ public class Startup
             options.JsonSerializerOptions.WriteIndented = false;
             options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowReadingFromString;
         });
+        var apiAssemblies = new List<Assembly>()
+        {
+            typeof(AnalyticModule.Api.Controllers.AnalyticController).Assembly,
+            typeof(LinkModule.Api.Controllers.LinkController).Assembly,
+            typeof(QrModule.Api.Controllers.QrController).Assembly
+        };
         foreach (var assembly in apiAssemblies)
         {
             builder.AddApplicationPart(assembly);
