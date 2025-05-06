@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Domain.Settings;
 
-namespace Shared.Persistence;
+namespace Shared.Persistence.Extensions;
 
 public static class PersistenceServiceCollectionExtensions
 {
