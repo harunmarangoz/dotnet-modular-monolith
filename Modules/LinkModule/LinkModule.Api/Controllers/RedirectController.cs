@@ -14,6 +14,7 @@ public class RedirectController(ISender sender, IBus bus) : Controller
         if (string.IsNullOrEmpty(uniqueKey)) return NotFound();
 
         var linkResult = await sender.Send(new GetLinkByUniqueKeyQuery(uniqueKey));
+        if (linkResult.HasError) return BadRequest(linkResult);
 
         await bus.Publish(new CreateClickEventMessage
         {
