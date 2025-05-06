@@ -11,6 +11,8 @@ This repository demonstrates a Modular Monolith architecture implemented in .NET
 - Multiple DbContext management
 - Containerization with Docker and Docker Compose
 
+![Modular Monolith Architecture](modular-monolith.png)
+
 ## Overview
 
 This project showcases how to build a modular .NET application that:
