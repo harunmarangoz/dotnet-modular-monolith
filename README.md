@@ -1,4 +1,26 @@
-# Modular Monolith with Clean 
+# Modular Monolith Example in .NET
+
+This repository demonstrates a Modular Monolith architecture implemented in .NET, enriched with industry best practices:
+
+- Modular Monolith approach
+- Clean Architecture (Onion / Hexagonal)
+- CQRS pattern
+- Keyed Services
+- Asynchronous Messaging with integration events
+- Centralized Package Management
+- Multiple DbContext management
+- Containerization with Docker and Docker Compose
+
+## Overview
+
+This project showcases how to build a modular .NET application that:
+- Keeps modules loosely coupled yet deployed as a single unit.
+- Enforces separation of concerns via Clean Architecture.
+- Implements read/write separation using CQRS.
+- Leverages keyed services for runtime binding of implementations.
+- Manages multiple EF Core DbContexts in a single solution.
+- Uses centralized NuGet package versions for consistency.
+- Is fully containerized and orchestrated via Docker Compose.
 
 ## Migrations
 
