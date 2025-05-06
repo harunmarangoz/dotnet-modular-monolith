@@ -1,69 +1,44 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
+using AnalyticModule.Api;
 using AnalyticModule.Api.Consumers;
-using AnalyticModule.Infrastructure;
 using AnalyticModule.Persistence.Contexts;
 using Api.Handlers;
-using LinkModule.Infrastructure;
-using LinkModule.Infrastructure.Services;
+using LinkModule.Api;
 using LinkModule.Persistence.Contexts;
 using MassTransit;
 using Microsoft.OpenApi.Models;
-using QrModule.Infrastructure;
-using QrModule.Infrastructure.Services;
-using Shared.Application.Services;
+using QrModule.Api;
+using Shared.Api;
 using Shared.Domain.Settings;
-using Shared.Persistence;
+using Shared.Persistence.Extensions;
 
 namespace Api;
 
 public class Startup
 {
+    private readonly List<IModuleStartup> _moduleStartups =
+    [
+        new AnalyticModuleStartup(),
+        new LinkModuleStartup(),
+        new QrModuleStartup()
+    ];
+
     public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        var apiAssemblies = new List<Assembly>();
+        var apiAssemblies = new List<Assembly>()
+        {
+            typeof(AnalyticModule.Api.Controllers.AnalyticController).Assembly,
+            typeof(LinkModule.Api.Controllers.LinkController).Assembly,
+            typeof(QrModule.Api.Controllers.QrController).Assembly
+        };
 
-        #region Link Module
-
-        var linkModuleDbConnectionSettings = configuration
-            .GetSection($"{nameof(DbConnectionSettings)}:{nameof(LinkModuleDatabaseContext)}")
-            .Get<DbConnectionSettings>();
-        services.AddKeyedSingleton(nameof(LinkModuleDatabaseContext), linkModuleDbConnectionSettings);
-        services.RegisterDbContext<LinkModuleDatabaseContext>(linkModuleDbConnectionSettings);
-
-        services.AddLinkModuleInfrastructure();
-        apiAssemblies.Add(typeof(LinkModule.Api.Controllers.LinkController).Assembly);
-
-        services.AddScoped<ILinkModuleService, LinkModuleService>();
-
-        #endregion
-
-        #region Analytic Module
-
-        var analyticModuleDbConnectionSettings = configuration
-            .GetSection($"{nameof(DbConnectionSettings)}:{nameof(AnalyticModuleDatabaseContext)}")
-            .Get<DbConnectionSettings>();
-        services.AddKeyedSingleton(nameof(AnalyticModuleDatabaseContext), analyticModuleDbConnectionSettings);
-        services.RegisterDbContext<AnalyticModuleDatabaseContext>(analyticModuleDbConnectionSettings);
-
-        apiAssemblies.Add(typeof(AnalyticModule.Api.Controllers.AnalyticController).Assembly);
-
-        services.AddAnalyticModuleInfrastructure();
-
-        services.AddScoped<IQrModuleService, QrModuleService>();
-
-        #endregion
-
-        #region Qr Module
-
-        apiAssemblies.Add(typeof(QrModule.Api.Controllers.QrController).Assembly);
-
-        services.AddQrModuleInfrastructure();
-
-        #endregion
+        foreach (var moduleStartup in _moduleStartups)
+        {
+            moduleStartup.ConfigureServices(services, configuration);
+        }
 
         var builder = services.AddControllers();
-
         builder.AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -131,14 +106,16 @@ public class Startup
             app.UseSwaggerUI();
         }
 
+        foreach (var moduleStartup in _moduleStartups)
+        {
+            moduleStartup.Configure(app, env);
+        }
+
         app.UseRouting();
 
         app.MapControllers();
         app.MapFallbackToController("Index", "Redirect");
 
         app.UseExceptionHandler();
-
-        app.ConfigureDbContext<LinkModuleDatabaseContext>();
-        app.ConfigureDbContext<AnalyticModuleDatabaseContext>();
     }
 }
